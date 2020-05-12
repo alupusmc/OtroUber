@@ -1,16 +1,19 @@
 package edu.daec.otrouber
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_mapa.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -26,6 +29,15 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
         map_view.getMapAsync(this)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        lista.setOnClickListener {
+            view.findNavController().navigate(R.id.despensaFragment)
+        }
+        agregar.setOnClickListener {
+            view.findNavController().navigate(R.id.altaFragment)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +50,11 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap?) {
         map?.let {
             googleMap = it
+
+            googleMap.setOnMarkerClickListener { marker ->
+                view?.findNavController()?.navigate(R.id.despensaFragment)
+                true
+            }
 
             val cdmx = LatLng(19.432608, -99.133209)
             googleMap.addMarker(

@@ -30,12 +30,12 @@ class DespensaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         list_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = DespensaRecyclerAdapter(mutableListOf<Item>())
         }
         getProducts()
+
     }
 
 
